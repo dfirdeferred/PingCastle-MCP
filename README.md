@@ -28,8 +28,11 @@ An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enter
 PingCastle Enterprise already scores your Active Directory and Entra ID security posture. `pingcastle-mcp` makes that data conversational:
 
 > *"What changed in cloud.lab since last month?"*
+> 
 > *"Show me the critical findings on the latest report."*
+> 
 > *"Compare report 1002 against 1 and tell me what got fixed."*
+> 
 > *"Run a fresh health check on cloud.lab."*
 
 Your LLM calls the right tool, pulls live data from the Enterprise REST API, and answers — no portal-clicking required.
