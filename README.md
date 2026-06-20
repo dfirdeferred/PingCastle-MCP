@@ -17,7 +17,7 @@ An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enter
 
 **7 MCP tools · reports & critical findings · scan diffing & score trends · on-demand scans · OS-keyring credentials · standalone Windows `.exe`**
 
-[Install](#-install) · [Configure](#-configure) · [Tools](#-tools) · [Clients & local LLMs](docs/CLIENTS.md) · [How it works](#-how-it-works) · [Build](#-build-from-source)
+[Install](#-install) · [Configure](#-configure) · [Tools](#-tools) · [Clients & local LLMs](docs/CLIENTS.md) · [How it works](#-how-it-works) 
 
 </div>
 
@@ -50,10 +50,21 @@ Your LLM calls the right tool, pulls live data from the Enterprise REST API, and
 
 ## Install
 
+**Standalone Windows `pingcastle-mcp.exe`** (no Python required) — download from [Releases](https://github.com/dfirdeferred/PingCastle-MCP/tree/main/Windows%20Executable), verify, and register:
+```powershell
+# verify the download against the published checksum
+Get-FileHash .\pingcastle-mcp.exe -Algorithm SHA256
+# compare with pingcastle-mcp.exe.sha256
+claude mcp add pingcastle -- C:\path\to\pingcastle-mcp.exe
+```
+
 **From PyPI** (recommended once published):
 ```bash
 claude mcp add pingcastle -- uvx pingcastle-mcp
 ```
+uvx (from uv (https://docs.astral.sh/uv/)) downloads and runs it in an isolated environment — nothing to manage. Or with pip:
+```pip install pingcastle-mcp```
+```claude mcp add pingcastle -- pingcastle-mcp```
 
 **From GitHub, no clone:**
 ```bash
@@ -65,14 +76,6 @@ claude mcp add pingcastle -- uvx --from git+https://github.com/dfirdeferred/Ping
 git clone https://github.com/dfirdeferred/PingCastle-MCP && cd PingCastle-MCP
 pip install .
 claude mcp add pingcastle -- pingcastle-mcp
-```
-
-**Standalone Windows `.exe`** (no Python required) — download from [Releases](https://github.com/dfirdeferred/PingCastle-MCP/releases), verify, and register:
-```powershell
-# verify the download against the published checksum
-Get-FileHash .\pingcastle-mcp.exe -Algorithm SHA256
-# compare with pingcastle-mcp.exe.sha256
-claude mcp add pingcastle -- C:\path\to\pingcastle-mcp.exe
 ```
 
 **Project-scoped `.mcp.json`:**
@@ -100,6 +103,22 @@ Re-running `configure` rotates the key by overwriting it. Prefer environment var
 | `PINGCASTLE_INSECURE_TLS` | `1` to skip TLS verification (self-signed lab certs) |
 | `PINGCASTLE_LOGIN_LOCATION` | Override the `location` sent at login (default `pingcastle-mcp`) |
 
+Or, where the OS keyring isn't available (headless / WSL / containers / CI), pass them as env vars instead — e.g. inline with the Claude Code command:
+```bash
+claude mcp add pingcastle \
+  -e PINGCASTLE_ENTERPRISE_URL=https://your-pingcastle \
+  -e PINGCASTLE_API_KEY=<YOUR-API-KEY> \
+  -- uvx pingcastle-mcp
+```
+
+  Other clients (Claude Desktop, Cursor, VS Code, local LLMs, …)
+
+Same package, just point the client's MCP config at it:
+```json
+{ "mcpServers": { "pingcastle": { "command": "uvx", "args": ["pingcastle-mcp"], "env": { "PINGCASTLE_ENTERPRISE_URL": "https://your-pingcastle", "PINGCASTLE_API_KEY": "PC2…" } } } }
+```
+Full per-client setup (incl. Ollama/LM Studio/local models) is in [docs/CLIENTS.md](https://github.com/dfirdeferred/PingCastle-MCP/tree/main/docs).
+
 Resolution order: **environment variables first, then stored config + keyring.** The API key and JWT are never logged or written to disk in plaintext.
 
 ## How it works
@@ -115,39 +134,13 @@ LLM client ──stdio──▶ FastMCP tool handlers (thin)
 - **Scanner** wraps `PingCastle.exe`, with a timeout that reaps the child process and graceful degradation when the exe isn't available.
 - **Pure parsing/diff** (summaries, filtering, report comparison, trends) is isolated and unit-tested against real captured API responses.
 
-## 🩻 Requirements
+## Requirements
 
 - **Python 3.11+** (for the pip/uvx install paths; the `.exe` bundles its own runtime)
 - A reachable **PingCastle Enterprise** instance + an **API key** (Agent authorization)
 - For `run_scan`: a Windows host with `PingCastle.exe` and AD/network reachability
 
-## Build from source
 
-```bash
-git clone https://github.com/dfirdeferred/PingCastle-MCP && cd PingCastle-MCP
-python -m venv .venv && . .venv/bin/activate    # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-pytest                                            # 50 unit tests; live tests are opt-in via RUN_LIVE=1
-```
-
-**Standalone Windows `.exe`** (build on a Windows host — PyInstaller does not cross-compile):
-```powershell
-pip install -e ".[dev]"
-pyinstaller --clean packaging/pingcastle-mcp.spec
-# -> dist\pingcastle-mcp.exe
-```
-See [`packaging/README-build.md`](packaging/README-build.md) for the build notes (entry-point wrapper, hidden imports).
-
-## Tests
-
-- **Unit tests** run offline against real captured API fixtures (`50 passed`).
-- **Live integration tests** are opt-in and hit a real server:
-  ```bash
-  RUN_LIVE=1 PINGCASTLE_INSECURE_TLS=1 \
-    PINGCASTLE_ENTERPRISE_URL=https://your-pingcastle \
-    PINGCASTLE_API_KEY=… \
-    pytest tests/integration -v
-  ```
 
 ## Contributing
 
