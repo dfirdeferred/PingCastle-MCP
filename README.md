@@ -1,8 +1,8 @@
 <div align="center">
 
-# pingcastle-mcp
+# PingCastle MCP Server
 
-### Talk to PingCastle Enterprise from Claude
+### Talk to PingCastle Enterprise from Claude (or any LLM)
 
 An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enterprise** instance straight into Claude — browse domains and reports, surface critical Active Directory findings, compare scans over time, and kick off on-demand health checks, all in natural language.
 
