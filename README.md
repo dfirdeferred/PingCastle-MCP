@@ -12,7 +12,7 @@ An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enter
 [![MCP Server](https://img.shields.io/badge/MCP-server-9cf?style=flat-square)](https://modelcontextprotocol.io)
 [![Tools](https://img.shields.io/badge/tools-7-brightgreen?style=flat-square)](#-tools)
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20WSL-blueviolet?style=flat-square)](#-install)
-[![PingCastle](https://img.shields.io/badge/PingCastle-Enterprise-red?style=flat-square)](https://www.pingcastle.com/)
+[![PingCastle](https://img.shields.io/badge/PingCastle-Enterprise-red?style=flat-square)](https://netwrix.com/en/products/pingcastle/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](#-contributing)
 
 **7 MCP tools · reports & critical findings · scan diffing & score trends · on-demand scans · OS-keyring credentials · standalone Windows `.exe`**
