@@ -17,7 +17,7 @@ An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enter
 
 **7 MCP tools · reports & critical findings · scan diffing & score trends · on-demand scans · OS-keyring credentials · standalone Windows `.exe`**
 
-[Install](#-install) · [Configure](#-configure) · [Tools](#-tools) · [Clients & local LLMs](docs/CLIENTS.md) · [How it works](#-how-it-works) 
+[Install](#Install) · [Configure](#Configure) · [Tools](#-tools) · [Clients & local LLMs](docs/CLIENTS.md) · [How it works](#-how-it-works) 
 
 </div>
 
