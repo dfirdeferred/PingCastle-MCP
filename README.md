@@ -8,7 +8,7 @@ An [MCP](https://modelcontextprotocol.io) server that plugs a **PingCastle Enter
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](#-requirements)
-[![PyPI](https://img.shields.io/pypi/v/pingcastle-mcp?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/pingcastle-mcp/)
+[![PyPI](https://img.shields.io/pypi/v/pingcastle-mcp?style=flat-square&logo=pypi&logoColor=red)](https://pypi.org/project/pingcastle-mcp/)
 [![MCP Server](https://img.shields.io/badge/MCP-server-9cf?style=flat-square)](https://modelcontextprotocol.io)
 [![Tools](https://img.shields.io/badge/tools-7-brightgreen?style=flat-square)](#-tools)
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20WSL-blueviolet?style=flat-square)](#-install)
